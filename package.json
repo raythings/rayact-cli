@@ -1,0 +1,44 @@
+{
+  "name": "@rayact/cli",
+  "version": "0.0.1",
+  "description": "Rayact CLI — dev, build, start, and run apps (Expo-style)",
+  "type": "module",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "bin": {
+    "rayact": "dist/cli.js"
+  },
+  "scripts": {
+    "build": "tsc",
+    "clean": "rm -rf dist",
+    "prepare": "npm run build",
+    "test": "tsc && node --test test/*.test.mjs"
+  },
+  "dependencies": {
+    "@rayact/dev-server": "github:raythings/rayact-dev-server#v0.0.1",
+    "create-rayact-app": "github:raythings/create-rayact-app#v0.0.1",
+    "@rayact/prebuild": "github:raythings/rayact-prebuild#v0.0.1"
+  },
+  "devDependencies": {
+    "@types/node": "^25.9.1",
+    "typescript": "^5.8.3"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  },
+  "license": "MIT",
+  "files": [
+    "dist"
+  ],
+  "publishConfig": {
+    "access": "public"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/raythings/rayact-cli.git"
+  },
+  "homepage": "https://github.com/raythings/rayact-cli#readme",
+  "bugs": {
+    "url": "https://github.com/raythings/rayact-cli/issues"
+  }
+}
