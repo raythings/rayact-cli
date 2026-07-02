@@ -15,10 +15,15 @@ export interface CliFlags {
   bytecode: boolean | null;
   android: boolean;
   ios: boolean;
+  iosSimulator: boolean;
+  iosDevice: boolean;
   desktopApp: boolean;
   install: boolean;
   debug: boolean;
   dev: boolean;
+  devClient: boolean;
+  production: boolean;
+  force: boolean;
   template: string;
   help: boolean;
   version: boolean;
@@ -40,10 +45,15 @@ export function parseCli(argv: string[]): CliFlags {
     bytecode: null,
     android: false,
     ios: false,
+    iosSimulator: false,
+    iosDevice: false,
     desktopApp: false,
     install: false,
     debug: true,
     dev: false,
+    devClient: false,
+    production: false,
+    force: false,
     template: 'default',
     help: false,
     version: false,
@@ -99,7 +109,13 @@ export function parseCli(argv: string[]): CliFlags {
     else if (arg === '--no-bytecode') flags.bytecode = false;
     else if (arg === '--android') flags.android = true;
     else if (arg === '--ios') flags.ios = true;
+    else if (arg === '--ios-simulator') flags.iosSimulator = true;
+    else if (arg === '--ios-device') flags.iosDevice = true;
+    else if (arg === '--web') flags.platform = 'web';
     else if (arg === '--desktop') flags.desktopApp = true;
+    else if (arg === '--dev-client') flags.devClient = true;
+    else if (arg === '--production') flags.production = true;
+    else if (arg === '--force') flags.force = true;
     else if (arg === '--dev') flags.dev = true;
     else if (arg === '--debug') flags.debug = true;
     else if (arg === '--release') { flags.debug = false; flags.mode = 'release'; }
