@@ -199,7 +199,16 @@ async function buildAndroidApk(
   }
   console.log(`Android project: ${androidDir}`);
 
-  const apkAssets = path.join(androidDir, 'app/src/main/assets');
+  // Template-scaffolded projects (rayact prebuild) pull assets from the app's
+  // rayact-assets/ dir via a gradle srcDir — write there, or the same files
+  // land in both srcDirs and gradle fails with "Duplicate resources". The
+  // monorepo engine project has no such srcDir and uses app/src/main/assets.
+  const appGradle = path.join(androidDir, 'app/build.gradle');
+  const usesRayactAssets =
+    existsSync(appGradle) && (await fs.readFile(appGradle, 'utf8')).includes('rayact-assets');
+  const apkAssets = usesRayactAssets
+    ? path.resolve(androidDir, '..', 'rayact-assets')
+    : path.join(androidDir, 'app/src/main/assets');
   await fs.mkdir(apkAssets, { recursive: true });
   if (bundleFormat === 'qjsbc' && bytecode) {
     await fs.writeFile(path.join(apkAssets, 'app.qjsbc'), bytecode);
